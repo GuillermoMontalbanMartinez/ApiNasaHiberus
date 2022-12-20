@@ -23,19 +23,9 @@ builder.Services.AddHttpClient("AsteroideService", asteroide =>
     asteroide.BaseAddress = new Uri(configuration["ConnectionString:UrlApiNasa"]);
 });
 
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // Automapper
-//builder.Services.AddAutoMapper(typeof(Program).Assembly);
-//builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-// Creación del Mapper
-//var automapper = new MapperConfiguration(item => item.AddProfile(new AsteroideProfile()));
-//IMapper mapper = automapper.CreateMapper();
-//builder.Services.AddSingleton<IMapper>(automapper.CreateMapper());
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-//var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new AsteroideProfile()));
-//IMapper mapper = mapperConfig.CreateMapper();
-//builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 

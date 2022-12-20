@@ -19,7 +19,7 @@ namespace Asteroides.Controllers
         {
             if (numeroDias < 0 || numeroDias > 7)
             {
-                return BadRequest();
+                return BadRequest("El número de días tiene que ser mayor que 0 y menor que 7, el valor introducido fue: " + numeroDias);
             }
 
             Console.WriteLine(numeroDias);
