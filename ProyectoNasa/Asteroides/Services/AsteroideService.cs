@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using Asteroides.Models;
+using AutoMapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -9,11 +10,13 @@ namespace Asteroides.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public AsteroideService(IHttpClientFactory httpClienFactory, IConfiguration configuration)
+        public AsteroideService(IHttpClientFactory httpClienFactory, IConfiguration configuration, IMapper mapper)
         {
             this._httpClientFactory = httpClienFactory;
             this._configuration = configuration;
+            this._mapper = mapper;
         }
 
         public async Task<List<Asteroide>> GetAsteroides()
@@ -22,13 +25,13 @@ namespace Asteroides.Services
             var cliente = this._httpClientFactory.CreateClient();
             var respuesta = await cliente.GetAsync(_configuration.GetSection("ConnectionString").GetSection("UrlApiNasa").Value);
      
-            Console.WriteLine(respuesta.Content);
+            // Console.WriteLine(respuesta.Content);
             JObject json = new();
             json = JObject.Parse(await respuesta.Content.ReadAsStringAsync());
-            Console.WriteLine(json);
+            // Console.WriteLine(json);
 
             var dias = json.GetValue("near_earth_objects");
-            Console.WriteLine(dias);
+            // Console.WriteLine(dias);
 
             foreach( var asteroide in dias.Children())
             {
@@ -36,10 +39,27 @@ namespace Asteroides.Services
                 {
                     var asteroideObject = JsonConvert.DeserializeObject<Asteroide>(asteroide2.ToString());
                     asteroides.Add(asteroideObject);
+                    
                 }
             }
 
+            var _ = GetAsteroidesDto(asteroides);
+
             return asteroides;
+        }
+
+        private List<AsteroideDto> GetAsteroidesDto(List<Asteroide> asteroides)
+        {
+            List<AsteroideDto> asteroidesDtos = new();
+
+            foreach(var asteroide in asteroides)
+            {
+                var _mapperAsteroid = _mapper.Map<AsteroideDto>(asteroide);
+                Console.WriteLine(_mapperAsteroid.Nombre);
+                asteroidesDtos.Add(_mapperAsteroid);
+            }
+            Console.WriteLine(asteroidesDtos);
+            return asteroidesDtos;
         }
 
     }

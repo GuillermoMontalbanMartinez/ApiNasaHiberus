@@ -22,6 +22,9 @@ namespace Asteroides.Controllers
             //Console.WriteLine(this._asterorideService.GetAsteroides());
             return Ok(this._asterorideService.GetAsteroides());
         }
+
+
+
         /*
         [HttpGet()]
         public ActionResult GetAsteroides() 

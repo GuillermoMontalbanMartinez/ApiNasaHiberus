@@ -8,12 +8,13 @@ namespace Asteroides.Mappers
     {
         public AsteroideProfile() 
         {
+            /*
             CreateMap<AsteroideDto, Asteroide>()
             .ForMember(
                   dest => dest.Name,
                   opt => opt.MapFrom(src => $"{src.Nombre}"))
              .ForMember(
-                   dest => dest.EstimatedDiameter.Meters.EstimatedDiameterMax + dest.EstimatedDiameter.Meters.EstimatedDiameterMin / 2,
+                   dest => (dest.EstimatedDiameter.Meters.EstimatedDiameterMax + dest.EstimatedDiameter.Meters.EstimatedDiameterMin) / 2,
                    opt => opt.MapFrom(src => $"{src.DiametroMetros}"))
              .ForMember(
                     dest => dest.CloseApproachData.Select(x => x.RelativeVelocity).FirstOrDefault(),
@@ -25,8 +26,20 @@ namespace Asteroides.Mappers
                     dest => dest.CloseApproachData.Select(x => x.OrbitingBody) ,
                     opt => opt.MapFrom(src => $"{src.Planeta}")
               );
-        }
+            */
+            CreateMap<Asteroide, AsteroideDto>()
+                .ForMember(destination => destination.Nombre,
+                            source => source.MapFrom(src => $"{src.Name}"))
+                .ForMember(destination => destination.DiametroMetros ,
+                           source => source.MapFrom(src => $"{Convert.ToDouble((src.EstimatedDiameter.Meters.EstimatedDiameterMax + src.EstimatedDiameter.Meters.EstimatedDiameterMin) / 2)}"))
+                .ForMember(destination => destination.DiametroMetros,
+                           source => source.MapFrom(src => $"{src.CloseApproachData.Select(x => x.RelativeVelocity).FirstOrDefault()}"))
+                .ForMember(destination => destination.Fecha,
+                           source => source.MapFrom(src=> $"{src.CloseApproachData.Select(x => x.CloseApproachDate)}"))
+                .ForMember(destination => destination.Planeta,
+                           source => source.MapFrom(src=>$"{src.CloseApproachData.Select(x => x.OrbitingBody)}")
+                );
+        }  
         
-
     }
 }
