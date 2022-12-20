@@ -8,25 +8,7 @@ namespace Asteroides.Mappers
     {
         public AsteroideProfile() 
         {
-            /*
-            CreateMap<AsteroideDto, Asteroide>()
-            .ForMember(
-                  dest => dest.Name,
-                  opt => opt.MapFrom(src => $"{src.Nombre}"))
-             .ForMember(
-                   dest => (dest.EstimatedDiameter.Meters.EstimatedDiameterMax + dest.EstimatedDiameter.Meters.EstimatedDiameterMin) / 2,
-                   opt => opt.MapFrom(src => $"{src.DiametroMetros}"))
-             .ForMember(
-                    dest => dest.CloseApproachData.Select(x => x.RelativeVelocity).FirstOrDefault(),
-                    opt => opt.MapFrom(src => $"{src.DiametroMetros}"))
-             .ForMember(
-                    dest => dest.CloseApproachData.Select(x => x.CloseApproachDate),
-                    opt => opt.MapFrom(src => $"{src.Fecha}"))
-             .ForMember(
-                    dest => dest.CloseApproachData.Select(x => x.OrbitingBody) ,
-                    opt => opt.MapFrom(src => $"{src.Planeta}")
-              );
-            */
+
             CreateMap<Asteroide, AsteroideDto>()
                 .ForMember(destination => destination.Nombre,
                             source => source.MapFrom(src => $"{src.Name}"))
@@ -38,8 +20,29 @@ namespace Asteroides.Mappers
                            source => source.MapFrom(src=> $"{src.CloseApproachData.Select(x => x.CloseApproachDate)}"))
                 .ForMember(destination => destination.Planeta,
                            source => source.MapFrom(src=>$"{src.CloseApproachData.Select(x => x.OrbitingBody)}")
-                );
+                ).ReverseMap();    
         }  
         
     }
 }
+
+
+/*
+CreateMap<AsteroideDto, Asteroide>()
+.ForMember(
+      dest => dest.Name,
+      opt => opt.MapFrom(src => $"{src.Nombre}"))
+ .ForMember(
+       dest => (dest.EstimatedDiameter.Meters.EstimatedDiameterMax + dest.EstimatedDiameter.Meters.EstimatedDiameterMin) / 2,
+       opt => opt.MapFrom(src => $"{src.DiametroMetros}"))
+ .ForMember(
+        dest => dest.CloseApproachData.Select(x => x.RelativeVelocity).FirstOrDefault(),
+        opt => opt.MapFrom(src => $"{src.DiametroMetros}"))
+ .ForMember(
+        dest => dest.CloseApproachData.Select(x => x.CloseApproachDate),
+        opt => opt.MapFrom(src => $"{src.Fecha}"))
+ .ForMember(
+        dest => dest.CloseApproachData.Select(x => x.OrbitingBody) ,
+        opt => opt.MapFrom(src => $"{src.Planeta}")
+  );
+*/
