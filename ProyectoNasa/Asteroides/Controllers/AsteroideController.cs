@@ -9,10 +9,9 @@ namespace Asteroides.Controllers
     public class AsteroideController : ControllerBase
     {
         private readonly IAsterorideService _asterorideService;
-        private readonly IMapper _mapper;
-        public AsteroideController(IAsterorideService asteroideService, IMapper mapper) {
+
+        public AsteroideController(IAsterorideService asteroideService) {
             this._asterorideService = asteroideService;
-            this._mapper = mapper;
         }
 
         [HttpGet("{numeroDias:int}")]

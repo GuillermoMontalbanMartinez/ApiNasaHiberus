@@ -55,9 +55,17 @@ namespace Asteroides.Services
             foreach(var asteroide in asteroides)
             {
                 var prueba2 = asteroide;
-                var _mapperAsteroid = _mapper.Map<AsteroideDto>(asteroide);
-                var prueba3 = _mapperAsteroid;
-                asteroidesDtos.Add(_mapperAsteroid);
+               try
+                {
+                    var _mapperAsteroid = _mapper.Map<AsteroideDto>(asteroide);
+                    var prueba3 = _mapperAsteroid;
+                    asteroidesDtos.Add(_mapperAsteroid);
+                } catch(Exception ex)
+                {
+                    return null;
+                }
+                
+                
             }
             Console.WriteLine(asteroidesDtos);
             return asteroidesDtos;

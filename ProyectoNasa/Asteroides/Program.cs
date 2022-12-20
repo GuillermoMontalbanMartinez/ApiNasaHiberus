@@ -31,7 +31,7 @@ builder.Services.AddHttpClient("AsteroideService", asteroide =>
 //IMapper mapper = automapper.CreateMapper();
 //builder.Services.AddSingleton<IMapper>(automapper.CreateMapper());
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 //var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new AsteroideProfile()));
 //IMapper mapper = mapperConfig.CreateMapper();
