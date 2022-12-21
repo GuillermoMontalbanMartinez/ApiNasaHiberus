@@ -4,6 +4,6 @@ namespace Asteroides.Services
 {
     public interface IAsterorideService
     {
-        Task<List<Asteroide>> GetAsteroides();
+        Task<List<Asteroide>> GetAsteroides(int days);
     }
 }

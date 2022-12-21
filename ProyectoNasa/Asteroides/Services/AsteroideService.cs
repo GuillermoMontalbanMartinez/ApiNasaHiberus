@@ -19,11 +19,12 @@ namespace Asteroides.Services
             this._mapper = mapper;
         }
 
-        public async Task<List<Asteroide>> GetAsteroides()
+        public async Task<List<Asteroide>> GetAsteroides(int days)
         {
+            string parametrosLlamadaApi = GetParametresHeaderUrl(3);
             List<Asteroide> asteroides = new();
             var cliente = this._httpClientFactory.CreateClient();
-            var respuesta = await cliente.GetAsync(_configuration.GetSection("ConnectionString").GetSection("UrlApiNasa").Value);
+            var respuesta = await cliente.GetAsync(_configuration.GetSection("ConnectionString").GetSection("UrlApiNasa").Value + parametrosLlamadaApi.ToString());
      
             JObject json = new();
             json = JObject.Parse(await respuesta.Content.ReadAsStringAsync());
@@ -39,7 +40,10 @@ namespace Asteroides.Services
                 }
             }
 
-            var _ = GetAsteroidesDto(asteroides);
+            var listasAsteroidesDto = GetAsteroidesDto(asteroides);
+
+            var query = listasAsteroidesDto.OrderByDescending(t => t.Fecha).Take(3);
+
 
             return asteroides;
         }
@@ -65,6 +69,13 @@ namespace Asteroides.Services
                 
             }
             return asteroidesDtos;
+        }
+
+        private string GetParametresHeaderUrl(int day)
+        {
+            DateTime hoy = DateTime.Now;
+            DateTime diaFin = hoy.AddDays(day);
+            return "&start_date=" + hoy.Date.ToString("yyyy-MM-dd") + "&end_date=" +  diaFin.Date.ToString("yyyy-MM-dd");
         }
 
     }
