@@ -33,8 +33,6 @@ namespace Asteroides.Controllers
 
         [HttpGet("{numeroDias:int}")]
         [ProducesResponseType(typeof(List<AsteroideDto>), 200)]
-        [ProducesResponseType(typeof(List<AsteroideDto>), 400)]
-        [ProducesResponseType(typeof(List<AsteroideDto>), 500)]
         public ActionResult Index(int numeroDias)
         {
             if (numeroDias < 0 || numeroDias > 7)
