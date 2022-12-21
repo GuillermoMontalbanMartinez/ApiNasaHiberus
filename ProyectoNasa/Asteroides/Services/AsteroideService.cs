@@ -19,9 +19,9 @@ namespace Asteroides.Services
             this._mapper = mapper;
         }
 
-        public async Task<List<Asteroide>> GetAsteroides(int days)
+        public async Task<IEnumerable<AsteroideDto>> GetAsteroides(int days)
         {
-            string parametrosLlamadaApi = GetParametresHeaderUrl(3);
+            string parametrosLlamadaApi = GetParametresHeaderUrl(days);
             List<Asteroide> asteroides = new();
             var cliente = this._httpClientFactory.CreateClient();
             var respuesta = await cliente.GetAsync(_configuration.GetSection("ConnectionString").GetSection("UrlApiNasa").Value + parametrosLlamadaApi.ToString());
@@ -41,11 +41,10 @@ namespace Asteroides.Services
             }
 
             var listasAsteroidesDto = GetAsteroidesDto(asteroides);
-
             var query = listasAsteroidesDto.OrderByDescending(t => t.Fecha).Take(3);
 
-
-            return asteroides;
+            //return asteroides;
+            return query;
         }
 
         private List<AsteroideDto> GetAsteroidesDto(List<Asteroide> asteroides)

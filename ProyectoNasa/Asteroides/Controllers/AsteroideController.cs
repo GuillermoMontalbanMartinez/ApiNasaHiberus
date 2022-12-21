@@ -40,7 +40,7 @@ namespace Asteroides.Controllers
                 return BadRequest("El número de días tiene que ser mayor que 0 y menor que 7, el valor introducido fue: " + numeroDias);
             }
             
-            return Ok(this._asterorideService.GetAsteroides(1));
+            return Ok(this._asterorideService.GetAsteroides(numeroDias).Result);
         }
         
     }
