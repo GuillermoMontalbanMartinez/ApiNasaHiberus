@@ -14,6 +14,16 @@ namespace Asteroides.Controllers
             this._asterorideService = asteroideService;
         }
 
+        /// GET: /api/Asteroide/3
+        /// <summary>
+        /// Devuelve la lista de los 3 Asteroides potencialmente mas peligrosos.
+        /// </summary>
+        /// <remarks>
+        /// Devuelve la lista de los 3 Asteroides potencialmente mas peligrosos de la api de la Nasa en base a su diametro de longitud en un intervalo del 1...7 de dias posteriores a el dia actual.
+        /// </remarks>
+        /// <param name="numeroDias"> Indica el numero de dias que quiero para ver </param>
+        /// <returns></returns>
+
         [HttpGet("{numeroDias:int}")]
         public ActionResult Index(int numeroDias)
         {
@@ -26,16 +36,6 @@ namespace Asteroides.Controllers
             //Console.WriteLine(this._asterorideService.GetAsteroides());
             return Ok(this._asterorideService.GetAsteroides());
         }
-
-
-
-        /*
-        [HttpGet()]
-        public ActionResult GetAsteroides() 
-        {
-            return Ok(_asterorideService.GetAsteroides());
-        }
-        */
         
     }
 }

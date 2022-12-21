@@ -25,13 +25,10 @@ namespace Asteroides.Services
             var cliente = this._httpClientFactory.CreateClient();
             var respuesta = await cliente.GetAsync(_configuration.GetSection("ConnectionString").GetSection("UrlApiNasa").Value);
      
-            // Console.WriteLine(respuesta.Content);
             JObject json = new();
             json = JObject.Parse(await respuesta.Content.ReadAsStringAsync());
-            // Console.WriteLine(json);
 
             var dias = json.GetValue("near_earth_objects");
-            // Console.WriteLine(dias);
 
             foreach( var asteroide in dias.Children())
             {

@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Asteroides.Controllers
 {
+    /// <summary>
+    /// List the weather forecast
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -13,6 +16,10 @@ namespace Asteroides.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        /// <summary>
+        ///  Constructs the controlles state
+        /// </summary>
+        /// <param name="logger"> Injected logger by the dependency injection container. </param>
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
