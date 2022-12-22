@@ -29,7 +29,7 @@ namespace Asteroides.Controllers
         /// <returns> D</returns>
         /// <response code="200"> Devuelve los 3 meteoritos más peligros desde el día actual hasta el número de días introducido por parámetro</response>
         /// <response code="400"> El número de días se pasa del rango (eres muy tonto ...) </response>
-        /// <response code="500"> Esta la cosa fea :( </response>
+        /// <response code="500"> Esta la cosa fea el servidor no ha tenido respuesta :( </response>
 
         [HttpGet("{numeroDias:int}")]
         [ProducesResponseType(typeof(List<AsteroideDto>), 200)]
@@ -38,6 +38,13 @@ namespace Asteroides.Controllers
             if (numeroDias < 0 || numeroDias > 7)
             {
                 return BadRequest("El número de días tiene que ser mayor que 0 y menor que 7, el valor introducido fue: " + numeroDias);
+            }
+
+            var listaAsteroides = this._asterorideService.GetAsteroides(numeroDias);
+
+            if (listaAsteroides is null)
+            {
+                return StatusCode(500);
             }
             
             return Ok(this._asterorideService.GetAsteroides(numeroDias).Result);
