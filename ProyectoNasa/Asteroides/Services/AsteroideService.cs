@@ -41,7 +41,7 @@ namespace Asteroides.Services
             }
 
             var listasAsteroidesDto = GetAsteroidesDto(asteroides);
-            var query = listasAsteroidesDto.OrderByDescending(t => t.Fecha).Take(3);
+            var query = listasAsteroidesDto.OrderByDescending(t => t.DiametroMetros).Take(3);
             return query;
         }
 

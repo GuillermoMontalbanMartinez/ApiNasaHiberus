@@ -2,6 +2,7 @@
 using Asteroides.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Asteroides.Controllers
 {
@@ -13,9 +14,11 @@ namespace Asteroides.Controllers
     public class AsteroideController : ControllerBase
     {
         private readonly IAsterorideService _asterorideService;
+        private readonly ILogger<AsteroideController> _logger;
 
-        public AsteroideController(IAsterorideService asteroideService) {
+        public AsteroideController(IAsterorideService asteroideService, ILogger<AsteroideController> logger) {
             this._asterorideService = asteroideService;
+            this._logger = logger;
         }
 
         /// GET: /api/Asteroide/3
@@ -37,7 +40,9 @@ namespace Asteroides.Controllers
         {
             if (numeroDias < 0 || numeroDias > 7)
             {
-                return BadRequest("El número de días tiene que ser mayor que 0 y menor que 7, el valor introducido fue: " + numeroDias);
+                // this._logger.LogInformation("El número de días introducido deber ser mayor que 0 y menor que yo, el valor introducido fue: " + numeroDias);
+                _logger.LogError("Fuera de rango");
+                return BadRequest();
             }
 
             var listaAsteroides = this._asterorideService.GetAsteroides(numeroDias);
